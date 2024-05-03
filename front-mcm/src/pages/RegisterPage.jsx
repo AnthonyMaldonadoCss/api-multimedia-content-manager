@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function RegisterPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,18 +13,21 @@ function RegisterPage() {
   });
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/");
+    if (isAuthenticated) navigate("/home");
   }, [isAuthenticated, navigate])
 
 
   return (
-    <div className="w-full bg-zinc-800 max-w-md p-10 rounded-sm">
+    <div className="flex h-[calc(100vh-100px)] justify-center itesms-center">
 
+    <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
     {
       error && <div className="bg-red-100 border border-red-400 text-red-700 px-5 py-3 rounded relative">
         <p className="text-red-500">{error}</p>
       </div>
     }
+
+    <h1 className="text-3xl font-bold text-white">Register</h1>
 
       <form onSubmit={onSubmit} >
 
@@ -62,6 +65,13 @@ function RegisterPage() {
       
       <button type="submit">Register</button>
       </form>
+
+      <p className="flex gap-x-2 justify-between">
+        Already have an account?
+        <Link to="/login" className="text-blue-500"> Sign In </Link>
+      </p>
+
+    </div>
     </div>
   )
 }
