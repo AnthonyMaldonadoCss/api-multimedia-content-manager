@@ -20,7 +20,7 @@ const register = async (req, res) => {
   
   const { username, email, password, role } = value;
 
-  const userExists = await User.findOne({ email });
+  const userExists = await User.findOne({ $or: [{ username }, { email: username }] });
 
   if (userExists) {
     return res.status(400).json({ message: 'User already exists' });
@@ -85,7 +85,7 @@ const signin = async (req, res) => {
 
 //profile
 const profile = async (req, res) => {
-  const user = await User.findById(req.userId);
+  const user = await User.findById(req.user._id);
 
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
